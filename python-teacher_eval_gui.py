@@ -1,4 +1,4 @@
-from pynput import keyboard
+import pyautogui
 import time
 
 print("""
@@ -19,50 +19,24 @@ looping = False
 def send_keys(keys):
     print(f"Executing (0.1s delay)")
     time.sleep(1.5)
-    with keyboard.Controller() as controller:
-        for key in keys:
-            controller.press(key)
-            controller.release(key)
-            time.sleep(0.1)
+    for key in keys:
+        pyautogui.press(key)
+        time.sleep(0.1)
 
 def toggle_loop():
     global looping
     looping = not looping
 
-def on_press(key):
-    try:
-        if key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:
-            pass
-        elif key == keyboard.Key.shift_l or key == keyboard.Key.shift_r:
-            pass
-        elif key == keyboard.Key.f1:
-            toggle_loop()
-        elif key == keyboard.Key.f2:
-            toggle_loop()
-        elif key == keyboard.Key.f3:
-            toggle_loop()
-        elif key == keyboard.Key.f4:
-            toggle_loop()
-        elif key == keyboard.Key.f5:
-            toggle_loop()
-    except AttributeError:
-        pass
-
-listener = keyboard.Listener(on_press=on_press)
-listener.start()
-
 while True:
     if looping:
-        if keyboard.Key.ctrl_l in listener.pressed_keys or keyboard.Key.ctrl_r in listener.pressed_keys:
-            if keyboard.Key.shift_l in listener.pressed_keys or keyboard.Key.shift_r in listener.pressed_keys:
-                if keyboard.Key.f1 in listener.pressed_keys:
-                    send_keys(['tab', 'space'] * 9 + ['tab'] * 3)
-                elif keyboard.Key.f2 in listener.pressed_keys:
-                    send_keys(['tab', 'right'] * 9 + ['tab'] * 3)
-                elif keyboard.Key.f3 in listener.pressed_keys:
-                    send_keys(['tab', 'right', 'right'] * 9 + ['tab'] * 3)
-                elif keyboard.Key.f4 in listener.pressed_keys:
-                    send_keys(['tab', 'right', 'right', 'right'] * 9 + ['tab'] * 3)
-                elif keyboard.Key.f5 in listener.pressed_keys:
-                    send_keys(['tab', 'right', 'right', 'right', 'right'] * 9 + ['tab'] * 3)
+        if pyautogui.keyDown('ctrl') and pyautogui.keyDown('shift') and pyautogui.keyDown('f1'):
+            send_keys(['tab', 'space'] * 9 + ['tab'] * 3)
+        elif pyautogui.keyDown('ctrl') and pyautogui.keyDown('shift') and pyautogui.keyDown('f2'):
+            send_keys(['tab', 'right'] * 9 + ['tab'] * 3)
+        elif pyautogui.keyDown('ctrl') and pyautogui.keyDown('shift') and pyautogui.keyDown('f3'):
+            send_keys(['tab', 'right', 'right'] * 9  + ['tab'] * 3)
+        elif pyautogui.keyDown('ctrl') and pyautogui.keyDown('shift') and pyautogui.keyDown('f4'):
+            send_keys(['tab', 'right', 'right', 'right'] * 9 + ['tab'] * 3)
+        elif pyautogui.keyDown('ctrl') and pyautogui.keyDown('shift') and pyautogui.keyDown('f5'):
+            send_keys(['tab', 'right', 'right', 'right', 'right'] * 9 + ['tab'] * 3)
     time.sleep(0.1)
